@@ -3,37 +3,68 @@
 <head>
     <title>Student Performance Predictor</title>
 </head>
-<body style="text-align:center; font-family:Arial;">
+<body style="font-family:Arial; text-align:center;">
 
     <h1>Student Performance Prediction</h1>
 
     Name: <input type="text" id="name"><br><br>
+    Roll Number: <input type="text" id="roll"><br><br>
+    Previous Marks: <input type="number" id="marks"><br><br>
     Study Hours: <input type="number" id="study"><br><br>
-    Marks: <input type="number" id="marks"><br><br>
-    Attendance: <input type="number" id="attendance"><br><br>
+    Attendance (%): <input type="number" id="attendance"><br><br>
+    Extra Activities (yes/no): <input type="text" id="extra"><br><br>
 
     <button onclick="predict()">Predict</button>
+
+    <h2>Student Details</h2>
+
+    <table border="1" align="center" cellpadding="10">
+        <tr>
+            <th>Name</th>
+            <th>Roll Number</th>
+            <th>Previous Marks</th>
+            <th>Study Hours</th>
+            <th>Attendance</th>
+            <th>Extra Activities</th>
+        </tr>
+        <tr>
+            <td id="r_name"></td>
+            <td id="r_roll"></td>
+            <td id="r_marks"></td>
+            <td id="r_study"></td>
+            <td id="r_attendance"></td>
+            <td id="r_extra"></td>
+        </tr>
+    </table>
 
     <h2 id="result"></h2>
 
     <script>
         function predict() {
             let name = document.getElementById("name").value;
-            let study = parseFloat(document.getElementById("study").value);
+            let roll = document.getElementById("roll").value;
             let marks = parseFloat(document.getElementById("marks").value);
+            let study = parseFloat(document.getElementById("study").value);
             let attendance = parseFloat(document.getElementById("attendance").value);
+            let extra = document.getElementById("extra").value;
 
-            if (!study || !marks || !attendance) {
-                document.getElementById("result").innerHTML = "Please enter all values!";
-                return;
-            }
+            let extra_score = (extra.toLowerCase() === "yes") ? 5 : 0;
 
-            let predicted = (study * 5) + (marks * 0.5) + (attendance * 0.3);
+            let predicted = (study * 5) + (marks * 0.5) + (attendance * 0.3) + extra_score;
 
             if (predicted > 100) predicted = 100;
 
-            document.getElementById("result").innerHTML =
-                name + "'s Predicted Score: " + predicted.toFixed(2);
+            // Fill table
+            document.getElementById("r_name").innerText = name;
+            document.getElementById("r_roll").innerText = roll;
+            document.getElementById("r_marks").innerText = marks;
+            document.getElementById("r_study").innerText = study;
+            document.getElementById("r_attendance").innerText = attendance + "%";
+            document.getElementById("r_extra").innerText = extra;
+
+            // Show result
+            document.getElementById("result").innerText =
+                "Expected Pass Percentage: " + predicted.toFixed(2) + "%";
         }
     </script>
 
