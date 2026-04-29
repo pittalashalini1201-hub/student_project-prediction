@@ -3,16 +3,41 @@
 <head>
     <title>Student Performance Predictor</title>
 </head>
-<body>
+<body style="text-align:center; font-family:Arial;">
 
     <h1>Student Performance Prediction</h1>
 
-    Name: <input type="text"><br><br>
-    Study Hours: <input type="number"><br><br>
-    Marks: <input type="number"><br><br>
-    Attendance: <input type="number"><br><br>
+    Name: <input type="text" id="name"><br><br>
+    Study Hours: <input type="number" id="study"><br><br>
+    Marks: <input type="number" id="marks"><br><br>
+    Attendance: <input type="number" id="attendance"><br><br>
 
-    <button>Predict</button>
+    <button onclick="predict()">Predict</button>
+
+    <h2 id="result"></h2>
+
+    <script>
+        function predict() {
+            let name = document.getElementById("name").value;
+            let study = parseFloat(document.getElementById("study").value);
+            let marks = parseFloat(document.getElementById("marks").value);
+            let attendance = parseFloat(document.getElementById("attendance").value);
+
+            if (!study || !marks || !attendance) {
+                document.getElementById("result").innerHTML = "Please enter all values!";
+                return;
+            }
+
+            let predicted = (study * 5) + (marks * 0.5) + (attendance * 0.3);
+
+            if (predicted > 100) predicted = 100;
+
+            document.getElementById("result").innerHTML =
+                name + "'s Predicted Score: " + predicted.toFixed(2);
+        }
+    </script>
 
 </body>
 </html>
+
+    
